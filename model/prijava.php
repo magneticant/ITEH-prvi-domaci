@@ -25,9 +25,9 @@ class Prijava{
     // Insert - C
 
     public function insert($conn, Prijava $prijava){
-        $upit = "insert into prijava( odeljenje, sala, datum, id_korisnika, id_doktora)"
+        $upit = "insert into prijava(odeljenje, sala, datum, id_korisnika, id_doktora)"
               + "values ('$prijava->odeljenje', '$prijava->sala', '$prijava->datum',"
-              + " '$prijava->pacijent->sifra', '$prijava->doktor->id_doktora'";
+              + " '{$prijava->pacijent->sifra}', '{$prijava->doktor->id_doktora}'";
 
               return $conn->query($upit);
     }

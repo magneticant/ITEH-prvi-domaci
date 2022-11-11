@@ -4,15 +4,17 @@
 }
 
 .jumbotron {
+    font-family: monospace;
     background-color: rgba(255, 182, 193, 0);
     float: center;
-    color: #000;
+    color: thistle;
     text-align: center;
-    border: 3px white; 
+    border: 10px rgb(76, 71, 118); 
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 20px;
-    background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(31, 154, 53));
+    background-image: linear-gradient(to right, #4b39d1,#3c23c5);
+    
 }
 
 h1 {
@@ -125,14 +127,14 @@ div.modal-content, div.container.sir-form {
 #btn-izmeni{
     font-size: 18px;
     border-radius: 10px;
-    background-image: linear-gradient(to right, #3cfda0,#3daa72);
+    background-image: linear-gradient(to right, #4b39d1,#3c23c5);
     border-color: white;
 }
 
 #btn-obrisi{
     font-size: 18px;
     border-radius: 10px; 
-    background-image: linear-gradient(to right, #ff704d,#ff5c33);
+    background-image: linear-gradient(to right, #4b39d1,#3c23c5);
     border-color: white;   
 }
 
@@ -140,8 +142,8 @@ div.modal-content, div.container.sir-form {
 #btn-sortiraj{
     font-size: 18px;
     border-radius: 10px; 
-    background-image: linear-gradient(to right, #9dff4d,#ebff33);
-    border-color: white;   
+    background-image: linear-gradient(to right, #4b39d1,#3c23c5);
+    border-color: white;
 }
 
 :placeholder-shown{

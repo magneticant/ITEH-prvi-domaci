@@ -3,18 +3,18 @@
     font-size: 15px;
 }
 
-.jumbotron {
+.naslov {
     font-family: monospace;
-    background-color: rgba(255, 182, 193, 0);
+    /* background-color: rgba(255, 182, 193, 0); */
     float: center;
-    color: thistle;
     text-align: center;
     border: 10px rgb(76, 71, 118); 
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 20px;
-    background-image: linear-gradient(to right, #4b39d1,#3c23c5);
-    
+    background-image: linear-gradient(to right, #6d63b5,#3c23c5);
+    padding: 20px;
+    font-weight: bold;
 }
 
 h1 {
@@ -28,19 +28,6 @@ body{
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-attachment: fixed; 
-}
-
-.sir-form{
-    background: #000; 
-    margin-top: 10%;
-    margin-bottom: 5%;
-    width: 90%;
-    border: 5px solid orange; 
-} 
-
-
-.sir-image{
-    text-align: center;
 }
 
 
@@ -66,9 +53,9 @@ body{
 
 div.modal-content, div.container.sir-form {
     background-image: url("../img/slika.jpg");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-attachment: fixed; 
+    /* background-size: 100% 100%; */
+    background-repeat: repeat-y;
+    /* background-attachment: fixed;  */
 }
 
 .row{
@@ -104,27 +91,6 @@ div.modal-content, div.container.sir-form {
     text-align: center;
 }
 
-#btn-izmeni{
-    font-size: 18px;
-    border-radius: 10px;
-    background-image: linear-gradient(to right, #4b39d1,#3c23c5);
-    border-color: white;
-}
-
-#btn-obrisi{
-    font-size: 18px;
-    border-radius: 10px; 
-    background-image: linear-gradient(to right, #4b39d1,#3c23c5);
-    border-color: white;   
-}
-
-
-#btn-sortiraj{
-    font-size: 18px;
-    border-radius: 10px; 
-    background-image: linear-gradient(to right, #4b39d1,#3c23c5);
-    border-color: white;
-}
 
 :placeholder-shown{
     width: 300px;

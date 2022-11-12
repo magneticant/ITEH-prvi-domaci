@@ -1,4 +1,3 @@
-
     <!DOCTYPE html>
     <html lang="en">
 
@@ -15,22 +14,24 @@
     <body>
 
 
-        <div class="jumbotron" style="color: black;">
+        <div class="naslov" style="color: black;">
             <h1>Doktorska ordinacija</h1>
         </div>
+        <br>
+        
         <div class="row" style="background-color: rgba(50, 205, 50, 0.5);">
             <div class="col-md-4">
-                <button id="btn-prikaz" class="btn" style=" border: 1px solid white; "> Prikazi zakazivanje</button>
+                <button id="dugmePrikazi" class="btn" style=" border: 1px solid white; "> Prikazi zakazivanje</button>
             </div>
             <div class="col-md-4">
-                <button id="btn-dodaj" type="button" class="btn" style=" border: 1px solid white;" data-toggle="modal" data-target="#myModal"> Zakazi pregled</button>
+                <button id="dugmeDodaj" type="button" class="btn" style=" border: 1px solid white;" data-toggle="modal" data-target="#myModal"> Zakazi pregled</button>
             </div>
             <div class="col-md-4">
-                <button id="btn-pretraga" class="btn" style="border: 1px solid white;"> Pretrazi zakazani pregled</button>
+                <button id="dugmePretrzi" class="btn" style="border: 1px solid white;"> Pretrazi zakazani pregled</button>
                 <input type="text" id="myInput" onkeyup="funkcijaZaPretragu()" placeholder="Pretrazi kolokvijume po predmetu" hidden>
             </div>
             <div class="col-md-4">
-                <button id="btn-brisanje" class="btn" style=" border: 1px solid white; "> Obrisi zakazivanje</button>
+                <button id="dugmeObrisi" class="btn" style=" border: 1px solid white; "> Obrisi zakazivanje</button>
             </div>
         </div>
         <br>
@@ -72,16 +73,16 @@
                 </table>
                 <div class="row">
                     <div class="col-md-1" style="text-align: right">
-                        <button id="btn-izmeni" class="btn btn-warning" data-toggle="modal" data-target="#izmeniModal">Izmeni</button>
+                        <button id="izmena_dugme" class="btn btn-warning" data-toggle="modal" data-target="#izmeniModal">Izmeni</button>
 
                     </div>
 
                     <div class="col-md-12" style="text-align: right">
-                        <button id="btn-obrisi" class="btn btn-danger" style="background-color: red; border: 1px solid white;">Obrisi</button>
+                        <button id="brisanje_dugme" class="btn btn-danger" style="background-color: red; border: 1px solid white;">Obrisi</button>
                     </div>
 
                     <div class="col-md-2" style="text-align: right; color: blue">
-                        <button id="btn-sortiraj" class="btn btn-normal" onclick="sortTable()">Sortiraj</button>
+                        <button id="sortiranje-dugme" class="btn btn-normal" onclick="sortTable()">Sortiraj</button>
                     </div>
 
                 </div>
@@ -104,12 +105,12 @@
                                 <div class="row">
                                     <div class="col-md-11 ">
                                         <div class="form-group">
-                                            <label for="">Predmet</label>
-                                            <input type="text" style="border: 1px solid black" name="predmet" class="form-control" />
+                                            <label for="">Ime i prezime lekara</label>
+                                            <input type="text" style="border: 1px solid black" name="ime i prezime lekara" class="form-control" />
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Katedra</label>
-                                            <input type="text" style="border: 1px solid black" name="katedra" class="form-control" />
+                                            <label for="">Odeljenje</label>
+                                            <input type="text" style="border: 1px solid black" name="odeljenje" class="form-control" />
                                         </div>
                                         <div class="form-group">
                                             <label for="sala">Sala</label>

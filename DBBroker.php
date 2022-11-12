@@ -17,12 +17,12 @@ class DBBroker{
         if(DBBroker::$instanciran == false){
             DBBroker::$instanciran = true;
             $conn = new mysqli($host, $user, $pass, $db);
-            $broker = new DBBroker($conn);
             if ($conn->connect_errno) {
                 exit("Neuspesna konekcija: $conn->connect_error err kod $conn->connect_errno");
             }
+            $broker = new DBBroker($conn);
         }
-        //echo("\nNije prosla sintaksa. Preskocio je if.\n");
+        
         return $broker;
   }
 }

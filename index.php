@@ -1,3 +1,35 @@
+<?php
+
+require "DBBroker.php";
+require "model/korisnik.php";
+
+session_start();
+if (isset($_POST['username']) && isset($_POST['password'])) {
+    $uname = $_POST['username'];
+    $upass = $_POST['password'];
+    $user_id = 1;
+ 
+    $korisnik = new Korisnik ($user_id, $uname, $upass);
+    $broker = DBBroker::instance('localhost', $korisnik->kor_ime, $korisnik->sifra, 'itehprvidomaci');
+    $conn = $broker->conn;
+    $odgUpita = Korisnik::prijavi_korisnika($korisnik, $conn);
+
+
+    if ($odgUpita->num_rows == 1) {
+        $_SESSION['user_id'] = $korisnik->sifra;
+        header('Location: home.php');
+    
+        exit();
+    }else{
+        echo('
+        <script>
+            window.alert("Neispravan login!");
+            console.log("Niste se ulogovali");
+        </script> ');
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

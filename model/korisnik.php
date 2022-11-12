@@ -12,11 +12,11 @@ class Korisnik{
         $this->lozinka = $lozinka;
     }
     public static function prijavi_korisnika(Korisnik $k, mysqli $conn){
-        $kor_ime = $k->kor_ime;
-        $lozinka = $k->lozinka;
+        // $kor_ime = $k->kor_ime;
+        // $lozinka = $k->lozinka;
 
-        $upit = "SELECT * FROM user WHERE username='$k->kor_ime' and password='$k->lozinka'";
-
+        $upit = "SELECT * FROM korisnik WHERE kor_ime='$k->kor_ime' and lozinka='$k->lozinka'";
+        
         return $conn->query($upit);
     }
 }

@@ -37,31 +37,12 @@ body{
     width: 90%;
     border: 5px solid orange; 
 } 
-/* .sir-form .form-control{
-    border-radius:1rem;
-} */
+
 
 .sir-image{
     text-align: center;
 }
 
-/* ne znam */
-.sir-image img{
-    border-radius: 6rem;
-    width: 11%;
-    margin-top: -3%;
-    transform: rotate(29deg);
-}
-
-/* ne znam */
-.prijava-form form{
-    padding: 3%;
-} 
-
-/* ne znam */
-.prijava-form form .row{
-    margin-bottom: -7%;
-}
 
 /* ovo je za izmeni pa naslov */
  .prijava-form h3{
@@ -71,7 +52,6 @@ body{
     color: #169b37;
 } 
 
-/* ovo je za Zakazi klk, novi prozor */
 .prijava-form {
     width: 80%;
     border: none;

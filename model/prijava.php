@@ -49,12 +49,12 @@ class Prijava{
         return $nizOdg;
     }
 
-    // Update - U, specificni
+    // Update - U
     public function updateSpecific(mysqli $conn){
         return $conn->query("update prijava set odeljenje = $this->odeljenje, sala = $this->sala, datum = $this->datum, id_korisnika = $this->pacijent->sifra, id_doktora = $this->doktor->id_doktora where id_prijave = $this->id_prijave,");
     }
 
-    // Delete - D, specificni
+    // Delete - D
     public function deleteSpecific(mysqli $conn){
         return $conn->query("delete from prijava where id = $this->id");
     }

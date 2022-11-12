@@ -9,6 +9,4 @@ class Doktor{
         $this->id_doktora = $id_doktora;
         $this->ime_prezime = $ime_prezime;
     }
-
-
 }

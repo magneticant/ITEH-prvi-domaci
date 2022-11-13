@@ -7,8 +7,8 @@ class Prijava{
     public $datum;
     public Korisnik $pacijent;
     public Doktor $doktor;
-    public $conn = DBBroker::instance('localhost', $_POST['username'],
-     $_POST['password'], 'itehprvidomaci');
+    //public $conn = DBBroker::instance('localhost', $_POST['username'],
+    // $_POST['password'], 'itehprvidomaci');
 
     public function __construct($id_prijave = null, $odelj = null,
      $sala = null, $dat = null, Korisnik $k = null, Doktor $d = null)

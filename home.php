@@ -1,3 +1,21 @@
+    <?php
+    require "DBBroker.php";
+    require "model/korisnik.php";
+    
+    session_start();
+    
+    $broker = DBBroker::instance('localhost', 'root',
+    '', 'itehprvidomaci');
+  
+    $conn = $broker->conn;
+    $nizOdgovora = array();
+        
+  
+        $nizOdgovoraMySqli = Korisnik::vrati_usera_po_id_u($conn, $_SESSION['user_id']);
+        $OdgovorObican = $nizOdgovoraMySqli->fetch_array();
+        echo(json_encode($OdgovorObican));
+    ?>
+
     <!DOCTYPE html>
     <html lang="en">
 
@@ -104,6 +122,7 @@
                                 <h3 style="color: black; text-align: center">Zakazi pregled</h3>
                                 <div class="row">
                                     <div class="col-md-11 ">
+                                    <div class="form-group">
                                         <div class="form-group">
                                             <label for="">Ime i prezime lekara</label>
                                             <input type="text" style="border: 1px solid black" name="ime i prezime lekara" class="form-control" />

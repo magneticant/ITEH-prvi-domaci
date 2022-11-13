@@ -19,5 +19,15 @@ class Korisnik{
         
         return $conn->query($upit);
     }
+    public static function vrati_id_usera(mysqli $conn, $username, $password){
+        $upit = "SELECT sifra from korisnik where kor_ime = '$username' and  lozinka = '$password'";
+
+        return $conn->query($upit);
+    }
+    public static function vrati_usera_po_id_u(mysqli $conn, $id){
+        $upit = "SELECT * from korisnik where sifra = '$id'";
+
+        return $conn->query($upit);
+    }
 }
 

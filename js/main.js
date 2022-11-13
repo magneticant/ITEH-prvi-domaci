@@ -15,12 +15,13 @@ $('#dodajForm').submit(function(){
     });
 
     request.done(function(response, textStatus, jqXHR){
-        if(response=="Success"){
+        if(response==="Success"){
             window.alert("Prijava je zabelezena.");
             location.reload(true);
         }else{
             console.log("Prijava nije zabelezena."+response);
             console.log(response);
+            
         }
     });
 

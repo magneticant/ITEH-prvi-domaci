@@ -1,7 +1,5 @@
 <?php
 
-use DBBroker as GlobalDBBroker;
-
 class DBBroker{
     public static $instanciran = false;
     public mysqli $conn;

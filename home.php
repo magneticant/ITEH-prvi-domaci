@@ -61,7 +61,9 @@ if ($rezultat->num_rows == 0) {
             </div>
         </div>
         <br>
-        <br>
+        <!-- <form id="hiddenForm" method="post" action = "#">
+        <input type= "checkbox" id="deleteAllCheck" style="display:none" method="post" name="key" type = "submit" onchange="this.form.submit();">
+        </form> -->
         <div id="pregled" class="panel panel-success" style="margin-top: 1%;">
 
             <div class="panel-body">
@@ -117,8 +119,9 @@ if ($rezultat->num_rows == 0) {
                     <div class="col-md-2" style="text-align: right; color: blue">
                         <button id="sortiranje_dugme" class="btn btn-normal" onclick="sortTable()">Sortiraj</button>
                     </div>
-
+                    
                 </div>
+                
             </div>
         </div>
 
@@ -343,7 +346,12 @@ if ($rezultat->num_rows == 0) {
             }
         }
         function deleteAll(){
-            
+            if(confirm("Da li stvarno zelite da sve obrisete? Ovo se ne moze opovrgnuti.")){
+                document.getElementById('deleteAllCheck').checked = true;
+            }
+            else{
+                alert("Otkazano brisanje!");
+            }
         }
         function funkcijaPrikaziInput(){
            // alert("radi funkcija");

@@ -33,3 +33,44 @@ $('#dodajForm').submit(function(){
 
 
 });
+
+$('#dugmeObrisi').click(function(){
+    console.log("Brisanje");
+
+    const checked = $('input[name=checked-donut]:checked');
+
+    req = $.ajax({
+        url: 'handler/deleteSpecific.php',
+        type:'post',
+        data: {'id':checked.val()}
+    });
+
+    req.done(function(res, textStatus, jqXHR){
+        if(res=="Success"){
+           checked.closest('tr').remove();
+           alert('Obrisana prijava');
+           console.log('Obrisan');
+        }else {
+        console.log("Prijava nije obrisana "+res);
+        alert("Prijava nije obrisana ");
+
+        }
+        console.log(res);
+    });
+
+});
+
+ $('#deleteAllCheck').change(function(){
+     request = $.ajax({
+         url: 'handler/deleteAll.php',
+         type: 'post',
+         data: ''
+    });
+    if(response=="Success"){
+            window.alert("Sve je obrisano.");
+            location.reload(true);
+        }else{
+            console.log("Nista nije obrisano."+response);
+            console.log(response);
+        }
+ });

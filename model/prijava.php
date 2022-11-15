@@ -54,8 +54,12 @@ class Prijava{
     }
 
     // Delete - D
-    public static function deleteSpecific(mysqli $conn, $id){
-        return $conn->query("delete from prijava where id = $id");
+    public static function deleteSpecific($id,mysqli $conn){
+        return $conn->query("delete from prijava where id_prijave = $id");
+    }
+
+    public static function deleteAll($conn, $id){
+        return $conn->query("delete* from prijava where id_korisnika = $id");
     }
 
     public static function returnHighestID(mysqli $conn){

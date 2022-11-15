@@ -13,14 +13,23 @@ class Doktor{
     }
 
     public static function selectSpecificDoctor(mysqli $conn, $ime_prezime){
-        $pretraga = "SELECT * FROM doktor WHERE ime_prez=$ime_prezime";
-        // $nizOdg = array();
-        // if ($resultSet = $conn->query($pretraga)) {
-        //     while ($red = $resultSet->fetch_array(1)) {
-        //         $nizOdg[] = $red;
-        //     }
-        // }
-        // return $nizOdg;
-        return $conn->query($pretraga);
+        $pretraga = "SELECT * from doktor where ime_prez = '$ime_prezime'";
+        $nizOdg = array();
+        if ($resultSet = $conn->query($pretraga)) {
+            while ($red = $resultSet->fetch_array(1)) {
+                $nizOdg[] = $red;
+            }
+        }
+        return $nizOdg;
+    }
+    public static function selectSpecificDoctorByID(mysqli $conn, $id){
+        $pretraga = "SELECT ime_prez from doktor where id_doktora = '$id'";
+        $nizOdg = array();
+        if ($resultSet = $conn->query($pretraga)) {
+            while ($red = $resultSet->fetch_array(1)) {
+                $nizOdg[] = $red;
+            }
+        }
+        return $nizOdg;
     }
 }

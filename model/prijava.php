@@ -14,11 +14,11 @@ class Prijava{
      $sala = null, $dat = null, Korisnik $k = null, Doktor $d = null)
     {
         $this->id_prijave = $id_prijave;
-        $odeljenje = $odelj;
+        $this->odeljenje = $odelj;
         $this->sala = $sala;
-        $datum = $dat;
-        $pacijent = $k;
-        $doktor = $d;
+        $this->datum = $dat;
+        $this->pacijent = $k;
+        $this->doktor = $d;
     }
     
     // Sada je potrebno implementirati CRUD operacije za rad sa prijavama.
@@ -26,16 +26,14 @@ class Prijava{
     // Insert - C
 
     public static function insert($conn, Prijava $prijava){
-        $upit = "insert into prijava(odeljenje, sala, datum, id_korisnika, id_doktora)"
-              + "values ('$prijava->odeljenje', '$prijava->sala', '$prijava->datum',"
-              + " '{$prijava->pacijent->sifra}', '{$prijava->doktor->id_doktora}'";
+        $upit = "insert into prijava(id_prijave ,odeljenje, sala, datum, id_korisnika, id_doktora) values ('$prijava->id_prijave','$prijava->odeljenje', '$prijava->sala', '$prijava->datum','{$prijava->pacijent->sifra}', '{$prijava->doktor->id_doktora}')";
 
               return $conn->query($upit);
     }
 
     // Select - R
-    public static function selectAll($conn){
-        return $conn->query("select * from pretraga");
+    public static function selectAll($conn, $id){
+        return $conn->query("select * from prijava where id_korisnika = '$id'");
     }
 
     // Select - R, specificni
@@ -58,5 +56,9 @@ class Prijava{
     // Delete - D
     public static function deleteSpecific(mysqli $conn, $id){
         return $conn->query("delete from prijava where id = $id");
+    }
+
+    public static function returnHighestID(mysqli $conn){
+        return $conn->query("SELECT id_prijave from prijava order by id_prijave DESC");
     }
 }

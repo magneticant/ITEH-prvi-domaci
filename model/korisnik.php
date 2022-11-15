@@ -29,5 +29,15 @@ class Korisnik{
 
         return $conn->query($upit);
     }
+    public static function SelectSpecificUserByID(mysqli $conn, $id){
+        $pretraga = "SELECT * from korisnik where sifra = '$id'";
+        $nizOdg = array();
+        if ($resultSet = $conn->query($pretraga)) {
+            while ($red = $resultSet->fetch_array(1)) {
+                $nizOdg[] = $red;
+            }
+        }
+        return $nizOdg;
+    }
 }
 

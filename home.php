@@ -1,20 +1,28 @@
     <?php
     require "DBBroker.php";
     require "model/korisnik.php";
-    
+    require "model/prijava.php";
+    require "model/doktor.php";
+
     session_start();
     
-    $broker = DBBroker::instance('localhost', 'root',
-    '', 'itehprvidomaci');
-  
+    $user_id = (int)$_SESSION['user_id'];
+    $broker = DBBroker::instance('localhost', 'root', '', 'itehprvidomaci');
     $conn = $broker->conn;
-    $nizOdgovora = array();
-        
-  
-        $nizOdgovoraMySqli = Korisnik::vrati_usera_po_id_u($conn, $_SESSION['user_id']);
-        $OdgovorObican = $nizOdgovoraMySqli->fetch_array();
-        echo(json_encode($OdgovorObican));
+    $rezultat = Prijava::selectAll($conn, $user_id);
+    
+if (!$rezultat) {
+    echo('<script> alert("Nemate nijednu prijavu.");</script>');
+    die();
+}
+if ($rezultat->num_rows == 0) {
+    echo('<script> alert("Nemate nijednu prijavu.");</script>');
+}
+   // die();
+// } else { 
+    
     ?>
+    
 
     <!DOCTYPE html>
     <html lang="en">
@@ -42,11 +50,11 @@
                 <button id="dugmePrikazi" class="btn" style=" border: 1px solid white; "> Prikazi zakazivanje</button>
             </div>
             <div class="col-md-4">
-                <button id="dugmeDodaj" type="button" class="btn" style=" border: 1px solid white;" data-toggle="modal" data-target="#myModal"> Zakazi pregled</button>
+                <button id="dugmeDodaj" type="button" class="btn" style=" border: 1px solid white;" data-toggle="modal" data-target="#zakaziModal1"> Zakazi pregled</button>
             </div>
             <div class="col-md-4">
-                <button id="dugmePretrzi" class="btn" style="border: 1px solid white;"> Pretrazi zakazani pregled</button>
-                <input type="text" id="myInput" onkeyup="funkcijaZaPretragu()" placeholder="Pretrazi kolokvijume po predmetu" hidden>
+                <button id="dugmePretrazi" class="btn" onclick="funkcijaPrikaziInput()" style="border: 1px solid white;"> Pretrazi zakazani pregled</button>
+                <input type="text" id="myInput" onkeyup="funkcijaZaPretragu()" placeholder="Pretrazi zakazivanja po datumu" hidden>
             </div>
             <div class="col-md-4">
                 <button id="dugmeObrisi" class="btn" style=" border: 1px solid white; "> Obrisi zakazivanje</button>
@@ -57,7 +65,7 @@
         <div id="pregled" class="panel panel-success" style="margin-top: 1%;">
 
             <div class="panel-body">
-                <table id="myTable" class="table table-hover table-striped" style="color: black; background-color: darkolivegreen;">
+                <table id="tabelaOrd" class="table table-hover table-striped" style="color: black; background-color: darkolivegreen;">
                     <thead class="thead">
                         <tr>
                             <th scope="col">Ime i prezime doktora</th>
@@ -67,48 +75,57 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- <?php
-                       // while ($red = $rezultat->fetch_array()) {
+                        <?php
+                        while ($red = $rezultat->fetch_array()) {
+                            // var_dump($red);
+                            $i = 0;
+                            $resSet = Doktor::selectSpecificDoctorByID($conn, $red['id_doktora']);
+                            // var_dump($resSet);                 
                         ?>
                             <tr>
-                                <td><?php echo $red["predmet"] ?></td>
-                                <td><?php echo $red["katedra"] ?></td>
+                                <td><?php echo $resSet[$i]['ime_prez']?></td>
+                                <td><?php echo $red["odeljenje"] ?></td>
                                 <td><?php echo $red["sala"] ?></td>
                                 <td><?php echo $red["datum"] ?></td>
+                                
+                            <?php $i++; ?>        
                                 <td>
                                     <label class="custom-radio-btn">
-                                        <input type="radio" name="checked-donut" value=<?php echo $red["id"] ?>>
+                                        <input type="radio" name="checked-donut" value=<?php echo $red["id_prijave"] ?>>
                                         <span class="checkmark"></span>
                                     </label>
                                 </td>
 
                             </tr>
+                         
                     <?php
-                        //} 
-                    
-                    ?>-->
+                        } 
+
+                    ?>
                     </tbody>
                 </table>
                 <div class="row">
                     <div class="col-md-1" style="text-align: right">
-                        <button id="izmena_dugme" class="btn btn-warning" data-toggle="modal" data-target="#izmeniModal">Izmeni</button>
+                        <button id="izmena_dugme" class="btn btn-warning" data-target="#izmeniModal" data-toggle="modal" data-dismiss="modal" >Izmeni</button>
 
                     </div>
 
                     <div class="col-md-12" style="text-align: right">
-                        <button id="brisanje_dugme" class="btn btn-danger" style="background-color: red; border: 1px solid white;">Obrisi</button>
+                        <button id="brisanje_dugme" formmethod="post" class="btn btn-danger" style="background-color: red; border: 1px solid white;" onclick="deleteAll()">Obrisi sve</button>
                     </div>
 
                     <div class="col-md-2" style="text-align: right; color: blue">
-                        <button id="sortiranje-dugme" class="btn btn-normal" onclick="sortTable()">Sortiraj</button>
+                        <button id="sortiranje_dugme" class="btn btn-normal" onclick="sortTable()">Sortiraj</button>
                     </div>
 
                 </div>
             </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
+        <!-- Novi modal -->
+       
+       <!-- Modal -->
+        <div class="modal fade" id="zakaziModal1" role="dialog">
             <div class="modal-dialog">
 
                 <!--Sadrzaj modala-->
@@ -125,7 +142,7 @@
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label for="">Ime i prezime lekara</label>
-                                            <input type="text" style="border: 1px solid black" name="ime i prezime lekara" class="form-control" />
+                                            <input type="text" style="border: 1px solid black" name="imeIPrezimeLekara" class="form-control" />
                                         </div>
                                         <div class="form-group">
                                             <label for="">Odeljenje</label>
@@ -156,6 +173,70 @@
 
 
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="zakaziModal" role="dialog">
+        
+            <div class="modal-dialog">
+
+                <!--Sadrzaj modala-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container prijava-form">
+                            <form action="#" method="post" id="dodajForm">
+                                <h3 style="color: black; text-align: center">Zakazi pregled</h3>
+                                <div class="row">
+                                    <div class="col-md-11 ">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="">Ime i prezime lekara</label>
+                                            <input type="text" style="border: 1px solid black" name="imeIPrezimeLekara" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Odeljenje</label>
+                                            <input type="text" style="border: 1px solid black" name="odeljenje" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sala">Sala</label>
+                                            <input type="sala" style="border: 1px solid black" name="sala" class="form-control" />
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="">Datum</label>
+                                                <input type="date" style="border: 1px solid black" name="datum" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button id="btnDodaj" type="submit" class="btn btn-success btn-block" style="background-color: orange; border: 1px solid black;">Zakazi</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+
+        <!-- test modal -->
+        <div class="modal fade" id="izmeniModal1" role="dialog">
+            <div class="modal-dialog">
+
+                <!--Sadrzaj modala-->
+                <div class="modal-content">
+                    <h1>Modal radi</h1>
+                </div>
+            </div>
+        </div>
+
         <!-- Modal -->
         <div class="modal fade" id="izmeniModal" role="dialog">
             <div class="modal-dialog">
@@ -175,10 +256,10 @@
                                             <input id="id" type="text" name="id" class="form-control" placeholder="Id *" value="" readonly />
                                         </div>
                                         <div class="form-group">
-                                            <input id="predmet" type="text" name="predmet" class="form-control" placeholder="Ime i prezime doktora*" value="" />
+                                            <input id="predmet" type="text" name="imeIPrezimeDoktora" class="form-control" placeholder="Ime i prezime doktora*" value="" />
                                         </div>
                                         <div class="form-group">
-                                            <input id="katedra" type="text" name="katedra" class="form-control" placeholder="Odeljenje *" value="" />
+                                            <input id="katedra" type="text" name="odeljenje" class="form-control" placeholder="Odeljenje *" value="" />
                                         </div>
                                         <div class="form-group">
                                             <input id="sala" type="text" name="sala" class="form-control" placeholder="Sala *" value="" />
@@ -200,19 +281,76 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
                     </div>
                 </div>
-
-
-
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                </div>
             </div>
 
+
+
         </div>
+
+        <!-- </div> -->
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
-
-
+    
+        <script>
+        
+        function sortTable(){
+            let redovi, i, j, a, b;
+            let tabela = document.getElementById("tabelaOrd");
+            redovi = tabela.rows;
+            for(i = (redovi.length-1);i>0 ;i--){
+                console.log(""+redovi.length-1);
+                for(j = 1;j< i;j++){
+                    console.log("vrednost i je " +i);
+                    console.log("vrednost j je "+ j);
+                    console.log("vrednost red len -1 je " + redovi.length-1);
+                    a = redovi[j].getElementsByTagName("TD")[1];
+                    b = redovi[j + 1].getElementsByTagName("TD")[1];
+                    aUpper = a.innerHTML.toUpperCase();
+                    bUpper = b.innerHTML.toUpperCase();
+                    if(aUpper > bUpper){
+                        redovi[j].parentNode.insertBefore(redovi[j + 1], redovi[j]);
+                        console.log("swap se desio.");
+                    }
+                }
+            }
+            window.alert("Tabela je sortirana.");
+        }
+        
+        function funkcijaZaPretragu() {
+            //alert("radi");
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tabelaOrd");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (td.textContent.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+        function deleteAll(){
+            
+        }
+        function funkcijaPrikaziInput(){
+           // alert("radi funkcija");
+            document.getElementById("myInput").style.display = "inline";
+        }
+    </script>
+    
 
     </body>
 

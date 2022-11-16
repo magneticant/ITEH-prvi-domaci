@@ -108,12 +108,12 @@ if ($rezultat->num_rows == 0) {
                 </table>
                 <div class="row">
                     <div class="col-md-1" style="text-align: right">
-                        <button id="izmena_dugme" class="btn btn-warning" data-target="#izmeniModal" data-toggle="modal" data-dismiss="modal" >Izmeni</button>
+                        <!-- <button id="izmena_dugme" class="btn btn-warning" data-target="#izmeniModal" data-toggle="modal" data-dismiss="modal" >Izmeni</button> -->
 
                     </div>
 
                     <div class="col-md-12" style="text-align: right">
-                        <button id="brisanje_dugme" formmethod="post" class="btn btn-danger" style="background-color: red; border: 1px solid white;" onclick="deleteAll()">Obrisi sve</button>
+                        <button id="brisanje_dugme" method="post" class="btn btn-danger" style="background-color: red; border: 1px solid white;" name="key">Obrisi sve</button>
                     </div>
 
                     <div class="col-md-2" style="text-align: right; color: blue">

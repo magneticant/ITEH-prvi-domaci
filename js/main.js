@@ -21,8 +21,8 @@ $('#dodajForm').submit(function(){
         // }else{
         //     console.log("Prijava nije zabelezena."+response);
         //     console.log(response);
-            window.alert("Prijava je zabelezena.");
-            location.reload(true);
+            // window.alert("Prijava je zabelezena.");
+            // location.reload(true);
             
         //}
     });
@@ -60,17 +60,35 @@ $('#dugmeObrisi').click(function(){
 
 });
 
- $('#deleteAllCheck').change(function(){
+ $('#brisanje_dugme').click(function(){
+
+    // const $form = $(this);
+    // const $inputs = $form.find();
+    // const serijalizacija = $form.serialize();
+    
+    const checked = $('input[name=checked-donut]:checked');
+    const unchecked = $('input[name=checked-donut]:not(:checked)');
+
+    console.log("Brisanje svega.");
      request = $.ajax({
          url: 'handler/deleteAll.php',
-         type: 'post',
-         data: ''
-    });
-    if(response=="Success"){
-            window.alert("Sve je obrisano.");
-            location.reload(true);
-        }else{
-            console.log("Nista nije obrisano."+response);
-            console.log(response);
+         type:'post',
+         data: {'id':checked.val(), 'id':unchecked.val()}
+     });    
+   
+     request.done(function(res, textStatus, jqXHR) {
+        
+        if(res=="Success"){
+           checked.closest('tr').remove();
+           unchecked.closest('tr').remove();
+           alert('Obrisane prijave');
+           console.log('Obrisane');
+        }else {
+        console.log("Prijave nisu obrisane "+res);
+        alert("Prijave nisu obrisane ");
+
         }
+        console.log(res);
+    });
+
  });

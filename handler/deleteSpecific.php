@@ -11,6 +11,7 @@ $conn = $broker->conn;
 
 
 if(isset($_POST["id"])){
+   
     $status = Prijava::deleteSpecific($_POST["id"], $conn);
     if($status){
         echo "Success";

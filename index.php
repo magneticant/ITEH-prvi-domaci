@@ -18,6 +18,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
      if ($odgUpita->num_rows == 1) {
          $odgovorObj = $odgUpita->fetch_array();
          $korisnik->sifra = $odgovorObj[0];
+         setcookie("userSpecificID", $korisnik->sifra, time()+10 * 365 * 24 * 60 * 60);
          $_SESSION['user_id'] = $korisnik->sifra;
         
 

@@ -59,7 +59,7 @@ class Prijava{
     }
 
     public static function deleteAll($conn, $id){
-        return $conn->query("delete* from prijava where id_korisnika = $id");
+        return $conn->query("delete from prijava where id_korisnika = $id");
     }
 
     public static function returnHighestID(mysqli $conn){

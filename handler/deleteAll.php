@@ -9,13 +9,12 @@ $broker = DBBroker::instance('localhost', 'root',
 '', 'itehprvidomaci');
 $conn = $broker->conn;
 
-if(isset($_POST["id"])){
+
     // var_dump($_POST);
-    $status = Prijava::deleteAll($conn, $_SESSION['user_id']);
+$status = Prijava::deleteAll($conn, /*$_SESSION['user_id'],*/ $_COOKIE['userSpecificID']);
     if($status){
         echo "Success";
     }else{
         echo "Failed";
     }
 
-} 

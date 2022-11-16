@@ -6,7 +6,8 @@
 
     session_start();
     
-    $user_id = (int)$_SESSION['user_id'];
+    $user_id = (int)$_COOKIE['userSpecificID'];
+    // $user_id = (int)$_SESSION['user_id'];
     $broker = DBBroker::instance('localhost', 'root', '', 'itehprvidomaci');
     $conn = $broker->conn;
     $rezultat = Prijava::selectAll($conn, $user_id);
@@ -46,15 +47,15 @@ if ($rezultat->num_rows == 0) {
         <br>
         
         <div class="row" style="background-color: rgba(50, 205, 50, 0.5);">
-            <div class="col-md-4">
-                <button id="dugmePrikazi" class="btn" style=" border: 1px solid white; "> Prikazi zakazivanje</button>
-            </div>
+             <div class="col-md-4">
+                <button id="dugmeOsvezi" class="btn" onclick="funkcijaOsvezi()" style=" border: 1px solid white; "> Osvezi stranicu</button>
+            </div> 
             <div class="col-md-4">
                 <button id="dugmeDodaj" type="button" class="btn" style=" border: 1px solid white;" data-toggle="modal" data-target="#zakaziModal1"> Zakazi pregled</button>
             </div>
             <div class="col-md-4">
                 <button id="dugmePretrazi" class="btn" onclick="funkcijaPrikaziInput()" style="border: 1px solid white;"> Pretrazi zakazani pregled</button>
-                <input type="text" id="myInput" onkeyup="funkcijaZaPretragu()" placeholder="Pretrazi zakazivanja po datumu" hidden>
+                <input type="text" id="myInput" onkeyup="funkcijaZaPretragu()" placeholder="Pretrazi zakazivanja po imenu doktora." hidden>
             </div>
             <div class="col-md-4">
                 <button id="dugmeObrisi" class="btn" style=" border: 1px solid white; "> Obrisi zakazivanje</button>
@@ -356,6 +357,9 @@ if ($rezultat->num_rows == 0) {
         function funkcijaPrikaziInput(){
            // alert("radi funkcija");
             document.getElementById("myInput").style.display = "inline";
+        }
+        function funkcijaOsvezi(){
+            location.reload(true);
         }
     </script>
     

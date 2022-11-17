@@ -20,7 +20,7 @@ if(isset($_POST['imeIPrezimeLekara']) && isset($_POST['odeljenje'])
 && isset($_POST['sala']) && isset($_POST['datum'])){
 
   $k = new Korisnik();
-  $idKorisnika = (int)$_SESSION['user_id'];
+  $idKorisnika = (int)$_COOKIE['userSpecificID'];
   
   $resultSetK = Korisnik::SelectSpecificUserByID($conn, $idKorisnika);
   $k->sifra = (int)$resultSetK[0]['sifra'];
@@ -31,7 +31,7 @@ if(isset($_POST['imeIPrezimeLekara']) && isset($_POST['odeljenje'])
   $d = new Doktor();
   $resultSetD = Doktor::selectSpecificDoctor($conn, $_POST['imeIPrezimeLekara']);
   if(count($resultSetD) == 0){
-    echo(`<script>alert("Nepostojeci doktor.");</script>`);
+    echo('<script>alert("Nepostojeci doktor.");</script>');
 }
   //var_dump($resultSetD);
   $d->id_doktora = (int)$resultSetD[0]['id_doktora'];

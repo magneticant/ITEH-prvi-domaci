@@ -74,7 +74,8 @@ $('#dugmeObrisi').click(function(){
         if(res=="Success"){
            alert('Obrisane prijave');
            console.log('Obrisane');
-           location.reload(true);
+           $('#tabelaSvihPrijava').empty();
+        //    location.reload(true);
         }else {
         console.log("Prijave nisu obrisane "+res);
         alert("Prijave nisu obrisane ");

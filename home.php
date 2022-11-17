@@ -85,7 +85,7 @@ if ($rezultat->num_rows == 0) {
                             $resSet = Doktor::selectSpecificDoctorByID($conn, $red['id_doktora']);
                             // var_dump($resSet);                 
                         ?>
-                            <tr>
+                            <tr id="tabelaSvihPrijava">
                                 <td><?php echo $resSet[$i]['ime_prez']?></td>
                                 <td><?php echo $red["odeljenje"] ?></td>
                                 <td><?php echo $red["sala"] ?></td>
@@ -109,8 +109,7 @@ if ($rezultat->num_rows == 0) {
                 </table>
                 <div class="row">
                     <div class="col-md-1" style="text-align: right">
-                        <!-- <button id="izmena_dugme" class="btn btn-warning" data-target="#izmeniModal" data-toggle="modal" data-dismiss="modal" >Izmeni</button> -->
-
+                        
                     </div>
 
                     <div class="col-md-12" style="text-align: right">
@@ -328,7 +327,6 @@ if ($rezultat->num_rows == 0) {
         }
         
         function funkcijaZaPretragu() {
-            //alert("radi");
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("myInput");
             filter = input.value.toUpperCase();
@@ -346,14 +344,7 @@ if ($rezultat->num_rows == 0) {
                 }
             }
         }
-        function deleteAll(){
-            if(confirm("Da li stvarno zelite da sve obrisete? Ovo se ne moze opovrgnuti.")){
-                document.getElementById('deleteAllCheck').checked = true;
-            }
-            else{
-                alert("Otkazano brisanje!");
-            }
-        }
+        
         function funkcijaPrikaziInput(){
            // alert("radi funkcija");
             document.getElementById("myInput").style.display = "inline";
